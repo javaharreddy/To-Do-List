@@ -1,0 +1,136 @@
+<style>
+    body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        max-width: 500px;
+        width: 100%;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        font-family: "Georgia", serif;
+    }
+
+    form {
+        margin-bottom: 20px;
+        display: flex;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .add-button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+    .update-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .task-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .task {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .task a {
+        margin-right: 5px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .task a:hover {
+        text-decoration: underline;
+    }
+
+    .task span {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .task .complete {
+        text-decoration: line-through;
+        color: #888;
+    }
+</style>
+
+<div class="container">
+    <h1>My todo list</h1>
+
+    <form method="post" action="/">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Enter task" required>
+        <input class="add-button" type="submit" name="create task" value="Add Task">
+    </form>
+
+    <div class="task-container">
+        {% for task in tasks %}
+            <div class="task">
+                {% if task.complete %}
+                    <span class="complete">{{ task }}</span>
+                {% else %}
+                    <span>{{ task }}</span>
+                {% endif %}
+                <div>
+                    <button class="update-button">
+                        <a href="{% url 'update_task' task.id %}">update</a>
+                    </button>
+                    <button class="delete-button">
+                        <a href="{% url 'delete' task.id %}">delete</a>
+</button>
+</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+
